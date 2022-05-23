@@ -14,7 +14,7 @@ go get -u github.com/coolstina/netio
 
 The IP address that is used to resolve the domain name to which it is mapped.
 
-### ClientIP(DNS)
+### ClientIP
 
 Get the http request X-Real-IP or X-Forwarded-For IP address.
 
