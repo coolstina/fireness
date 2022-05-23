@@ -23,6 +23,9 @@ import (
 	"strings"
 )
 
+var ErrNotfoundClientIP = fmt.Errorf("not found client ip")
+var ErrDomainParse = fmt.Errorf("domain parse failed")
+
 // DomainParsed parsed domain result structure definition.
 type DomainParsed struct {
 	Original string   `json:"original"`
@@ -84,7 +87,7 @@ func DomainParse(domain string) (*DomainParsed, error) {
 
 		slice := strings.Split(dial.RemoteAddr().String(), ":")
 		if len(slice) == 0 {
-			return nil, fmt.Errorf("domain parse failed")
+			return nil, ErrDomainParse
 		}
 
 		parsed.IPS = append(parsed.IPS, slice[0])
@@ -100,4 +103,20 @@ func DomainParse(domain string) (*DomainParsed, error) {
 	defer resp.Body.Close()
 
 	return parsed, nil
+}
+
+func ClientIP(req *http.Request) (string, error) {
+	// Get real IP.
+	rea := req.Header.Get("X-Real-IP")
+	if net.ParseIP(rea) != nil {
+		return rea, nil
+	}
+
+	// Get proxy IP.
+	proxy := req.Header.Get("X-Forwarded-IP")
+	if net.ParseIP(proxy) != nil {
+		return proxy, nil
+	}
+
+	return "", ErrNotfoundClientIP
 }

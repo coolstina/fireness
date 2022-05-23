@@ -15,6 +15,7 @@
 package netio
 
 import (
+	"net/http/httptest"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -73,4 +74,14 @@ func (suite *NetIOSuite) Test_DomainParse() {
 			}
 		}
 	}
+}
+
+func (suite *NetIOSuite) Test_ClientIP() {
+	request := httptest.NewRequest("GET", "/", nil)
+	request.Header.Set("x-real-ip", "192.168.0.1")
+	request.Header.Set("x-forwarded-for", "192.168.0.255")
+
+	actual, err := ClientIP(request)
+	assert.NoError(suite.T(), err)
+	assert.Equal(suite.T(), `192.168.0.1`, actual)
 }
