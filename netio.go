@@ -61,7 +61,7 @@ func DomainParse(domain string) (*DomainParsed, error) {
 	var parsed = NewDomainParsedWithOriginal(domain)
 
 	// Quick lookup host.
-	schema := strings.ContainsAny(domain, "http")
+	schema := strings.Contains(domain, "http")
 	if !schema {
 		host, err := net.LookupHost(domain)
 		if err != nil {

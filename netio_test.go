@@ -15,6 +15,7 @@
 package netio
 
 import (
+	"log"
 	"net/http/httptest"
 	"testing"
 
@@ -61,6 +62,11 @@ func (suite *NetIOSuite) Test_DomainParse() {
 			expectedString:  `{"original":"220.181.38.148","ips":["220.181.38.148"]}`,
 			expectedCompare: true,
 		},
+		{
+			domain:          "mrbs.autosolan.com",
+			expectedString:  `{"original":"mrbs.autosolan.com","ips":["113.240.251.7"]}`,
+			expectedCompare: true,
+		},
 	}
 
 	for _, grid := range grids {
@@ -73,6 +79,8 @@ func (suite *NetIOSuite) Test_DomainParse() {
 				assert.Equal(suite.T(), grid.expectedString, parse.String())
 			}
 		}
+
+		log.Printf("parse: %+v\n", parse)
 	}
 }
 
