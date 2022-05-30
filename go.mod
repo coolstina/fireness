@@ -1,4 +1,4 @@
-module github.com/coolstina/netio
+module github.com/coolstina/firenet
 
 go 1.18
 
