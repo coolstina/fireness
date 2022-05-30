@@ -1,11 +1,11 @@
-# netio
+# firenet
 
 Network address helper.
 
 ## Installation
 
 ```shell
-go get -u github.com/coolstina/netio
+go get -u github.com/coolstina/firenet
 ```
 
 ## Features
