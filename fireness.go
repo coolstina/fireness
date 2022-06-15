@@ -28,8 +28,8 @@ var ErrDomainParse = fmt.Errorf("domain parse failed")
 
 // DomainParsed parsed domain result structure definition.
 type DomainParsed struct {
-	Original string   `json:"original"`
-	IPS      []string `json:"ips"`
+	Original string `json:"original"`
+	IPS      IPList `json:"ips"`
 }
 
 // FirstIP returns the IPS list first IP address.
@@ -47,12 +47,44 @@ func (d *DomainParsed) String() string {
 	return string(data)
 }
 
+// IPv4s returns an IPv4 list.
+func (d *DomainParsed) IPv4s() IPList {
+	var list IPList
+	for _, cur := range d.IPS {
+		if IsIPv4(cur) {
+			if list == nil {
+				list = make(IPList, 0)
+			}
+
+			list = append(list, cur)
+		}
+	}
+
+	return list
+}
+
+// IPv6s returns an IPv6 list.
+func (d *DomainParsed) IPv6s() IPList {
+	var list IPList
+	for _, cur := range d.IPS {
+		if IsIPv6(cur) {
+			if list == nil {
+				list = make(IPList, 0)
+			}
+
+			list = append(list, cur)
+		}
+	}
+
+	return list
+}
+
 // NewDomainParsedWithOriginal returns a new DomainParsed instance with original
 // domain string.
 func NewDomainParsedWithOriginal(domain string) *DomainParsed {
 	return &DomainParsed{
 		Original: domain,
-		IPS:      make([]string, 0),
+		IPS:      make(IPList, 0),
 	}
 }
 
