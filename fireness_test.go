@@ -15,7 +15,6 @@
 package fireness
 
 import (
-	"log"
 	"net/http/httptest"
 	"testing"
 
@@ -79,9 +78,13 @@ func (suite *FirebaseSuite) Test_DomainParse() {
 				assert.Equal(suite.T(), grid.expectedString, parse.String())
 			}
 		}
-
-		log.Printf("parse: %+v\n", parse)
 	}
+}
+
+func (suite *FirebaseSuite) Test_DomainParse_With163() {
+	parsed, err := DomainParse("163.com")
+	assert.NoError(suite.T(), err)
+	assert.Len(suite.T(), parsed.IPv4s(), 2)
 }
 
 func (suite *FirebaseSuite) Test_ClientIP() {
