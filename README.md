@@ -23,6 +23,7 @@ Get the http request X-Real-IP or X-Forwarded-For IP address.
 - IsIP: Check whether the IP address is real ip.
 - IsIPv4: Check whether the IP address is IPv4.
 - IsIPv6: Check whether the IP address is real ip.
+- Localhost: Get localhost IP list.
 
 
 ### IP conversion
@@ -32,4 +33,8 @@ Get the http request X-Real-IP or X-Forwarded-For IP address.
 
 ## License
 
-Apache License.
+- [Apache License](LICENSE).
+
+## Author 
+
+- [@helloshaohua](https://github.com/helloshaohua)
